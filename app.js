@@ -1,20 +1,19 @@
 const express = require('express')
 const app = express()
 const { port } = require('./config');
-const si = require('systeminformation');
+const { getMetrics } = require('./sensor');
 const moment = require('moment')
 
 app.get('/metrics', (req, res) => {
-        si.cpuTemperature()
-        .then(temperature=>{
-            const localTime = moment().format()
-            const result = {
-                "temperature": temperature,
-                "humidity": temperature,
-                "time": localTime,
-            }
-            res.send(result)
-        });
+        const localTime = moment().format()
+        const metrics = getMetrics()
+        const result = {
+            "temperature": metrics.temperature,
+            "humidity": metrics.humidity,
+            "error": metrics.error,
+            "time": localTime,
+        }
+        res.send(result)
     }
 )
 
