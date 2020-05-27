@@ -1,19 +1,31 @@
 const express = require('express')
 const app = express()
 const { port } = require('./config');
-const { getMetrics } = require('./sensor');
+const { readSensor } = require('./sensor');
 const moment = require('moment')
 
 app.get('/metrics', (req, res) => {
         const localTime = moment().format()
-        const metrics = getMetrics()
-        const result = {
-            "temperature": metrics.temperature,
-            "humidity": metrics.humidity,
-            "error": metrics.error,
-            "time": localTime,
-        }
-        res.send(result)
+  
+        readSensor().then(function(data) {
+            const sensorData = data.toString()
+            const values = sensorData.split("|")
+            const result = {
+                "temperature": values[0].replace("\r","").replace("\n", ""),
+                "humidity": values[1].replace("\r","").replace("\n", ""),
+                "error": false,
+                "time": localTime,
+            }
+            res.send(result)
+        }).catch(function(error) {
+            const result = {
+                "temperature": 0,
+                "humidity": 0,
+                "error": true,
+                "time": localTime,
+            }
+            res.send(result)
+        });
     }
 )
 

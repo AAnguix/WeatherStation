@@ -1,1 +1,1 @@
- print('Hello from python')
+print('26.5|70')

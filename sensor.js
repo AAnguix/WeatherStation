@@ -1,23 +1,20 @@
 const { spawn } = require('child_process');
 
-function getMetrics() {
-    var dataToSend;
+function readSensor() {
+    return new Promise(function(success, nosuccess) {
+
+        const python = spawn('python', ['./read-sensor.py']);
     
-    const python = spawn('python', ['read-sensor.py']);
+        python.stdout.on('data', function(data) {
     
-    python.stdout.on('data', function (data) {
-     dataToSend = data.toString();
-    });
-   
-    return python.on('close', (code) => {
-        
-        const error = false
-        return {
-            "error": error,
-            "temperature": dataToSend,
-            "humidity": dataToSend
-        }
+            success(data);
+        });
+    
+        python.stderr.on('data', (data) => {
+    
+            nosuccess(data);
+        });
     });
 }
 
-exports.getMetrics = getMetrics 
+exports.readSensor = readSensor 
