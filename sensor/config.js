@@ -5,5 +5,6 @@ if (result.error) {
   }
   
 module.exports = {
-  port: process.env.PORT
+  port: process.env.PORT,
+  sensorId: process.env.SENSOR_ID
 };
