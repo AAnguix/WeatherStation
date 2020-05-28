@@ -1,0 +1,25 @@
+{
+  "name": "weather-station-server",
+  "version": "1.0.0",
+  "description": "Web api that provides temperature/humidity measurements from sensors",
+  "main": "app.js",
+  "dependencies": {
+    "axios": "^0.19.2",
+    "dotenv": "^8.2.0",
+    "moment": "^2.26.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AAnguix/WeatherStation.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AAnguix/WeatherStation/issues"
+  },
+  "homepage": "https://github.com/AAnguix/WeatherStation#readme"
+}
