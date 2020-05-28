@@ -5,16 +5,39 @@ const { today } = require('./dateUtils')
 const { port } = require('./config');
 
 app.get('/api/metrics', (req, res) => {
-    res.send(get_today_files())
+    getSensorMeasurements(getTodayFiles())
+    res.send(results)
 })
 
-function get_sensor_files(dataFolder) {
-    const fileNames = fs.readdirSync(dataFolder);
-    return fileNames
+function getSensorMeasurements(fileNames) {
+    results = []
+    fileNames.forEach(fileName => {
+
+        sensorId = fileName.split("_")[1]
+        const data = fs.readFileSync(fileName, {encoding:'utf8', flag:'r'}); 
+
+        fileLines = data.split("\r\n").filter(line => line != null && line != "")
+        fileLines.forEach(fileLine => {
+            values = fileLine.split("|")
+            const measurement = {
+                "sensorId": sensorId,
+                "time": values[0],
+                "temperature": values[1],
+                "humidity": values[2],
+            } 
+            results.push(measurement)
+        })
+         
+    }); 
+    return results
 }
 
-function get_today_files() {
-    const fileNames = get_sensor_files("./")
+function getSensorFiles(dataFolder) {
+    return fs.readdirSync(dataFolder);
+}
+
+function getTodayFiles() {
+    const fileNames = getSensorFiles("./")
     const date = today()
     return fileNames.filter(fn => fn.startsWith(date))
 }
