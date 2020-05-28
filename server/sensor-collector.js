@@ -2,6 +2,7 @@ const axios = require('axios');
 const { sensor_ips, sensor_api_url, sensor_api_port } = require('./config');
 const fs = require('fs')
 const moment = require('moment')
+const os = require("os");
 
 collectSensorsMeasurements()
 
@@ -12,19 +13,22 @@ function collectSensorsMeasurements() {
 }
 
 function collectSensorMeasurement(sensorIP, sensorApiPort, sensorApiUrl) {
-  url = sensorIP + ":" + sensorApiPort + sensorApiUrl
+  url = "http://" + sensorIP + ":" + sensorApiPort + sensorApiUrl
 
   axios.get(url)
     .then(response => {
-      console.log(response.data);
       const sensorId = response.data.sensorId
       const fileName = getFileName(sensorId)
-      const content = response.data.time + "|" + response.data.temperature + "|" + response.data.humidity
+      const content = createContent(response)
       createFileOrAppend(fileName, content)
     })
     .catch(error => {
       console.log(error);
     });
+}
+
+function createContent(response) {
+  return response.data.time + "|" + response.data.temperature + "|" + response.data.humidity + os.EOL
 }
 
 function createFileOrAppend(fileName, content) {
@@ -43,6 +47,6 @@ function createFileOrAppend(fileName, content) {
 }
 
 function getFileName(sensorId) {
-  const today = moment().format('yyyy-mm-dd');
-  return today + sensorId
+  const today = moment().format('yyyy-MM-DD');
+  return today + "_" + sensorId
 }

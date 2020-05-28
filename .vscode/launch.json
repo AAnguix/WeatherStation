@@ -11,6 +11,7 @@
             "skipFiles": [
                 "<node_internals>/**"
             ],
+            "cwd": "${workspaceFolder}\\sensor",
             "program": "${workspaceFolder}\\sensor\\app.js"
         },
         {
@@ -20,6 +21,7 @@
             "skipFiles": [
                 "<node_internals>/**"
             ],
+            "cwd": "${workspaceFolder}\\server",
             "program": "${workspaceFolder}\\server\\app.js"
         },
         {
