@@ -1,16 +1,18 @@
 const axios = require('axios');
-const { sensor_ips, sensor_api } = require('./config');
+const { sensor_ips, sensor_api_url, sensor_api_port } = require('./config');
 const fs = require('fs')
 const moment = require('moment')
 
+collectSensorsMeasurements()
+
 function collectSensorsMeasurements() {
   sensor_ips.forEach(sensor_ip => {
-    collectSensorMeasurement(sensor_ip, sensor_api)
+    collectSensorMeasurement(sensor_ip, sensor_api_port, sensor_api_url)
 });
 }
 
-function collectSensorMeasurement(sensorIP, apiUrl) {
-  url = sensorIP + apiUrl
+function collectSensorMeasurement(sensorIP, sensorApiPort, sensorApiUrl) {
+  url = sensorIP + ":" + sensorApiPort + sensorApiUrl
 
   axios.get(url)
     .then(response => {
@@ -44,5 +46,3 @@ function getFileName(sensorId) {
   const today = moment().format('yyyy-mm-dd');
   return today + sensorId
 }
-
-exports.collectSensorsMeasurements = collectSensorsMeasurements 
