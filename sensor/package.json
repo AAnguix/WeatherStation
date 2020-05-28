@@ -1,7 +1,7 @@
 {
-  "name": "WeatherStation",
+  "name": "weather-station-sensor",
   "version": "1.0.0",
-  "description": "Web api that offers environmental measurements from a Raspberry pi.",
+  "description": "Web api hosted on a Raspberry pi that reads temperature/humidity from a sensor",
   "main": "app.js",
   "dependencies": {
     "dotenv": "^8.2.0",
