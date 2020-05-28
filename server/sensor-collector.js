@@ -1,8 +1,8 @@
 const axios = require('axios');
 const { sensor_ips, sensor_api_url, sensor_api_port } = require('./config');
 const fs = require('fs')
-const moment = require('moment')
 const os = require("os");
+const { today } = require("./dateUtils");
 
 collectSensorsMeasurements()
 
@@ -47,6 +47,5 @@ function createFileOrAppend(fileName, content) {
 }
 
 function getFileName(sensorId) {
-  const today = moment().format('yyyy-MM-DD');
-  return today + "_" + sensorId
+  return today() + "_" + sensorId
 }
