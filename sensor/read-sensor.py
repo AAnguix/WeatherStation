@@ -1,9 +1,9 @@
-import Adafruit_DHT
-DHT_SENSOR = Adafruit_DHT.DHT22
-DHT_PIN = 4
+import adafruit_dht
 
-humidity, temperature = Adafruit_DHT.read_retry(DHT_SENSOR, DHT_PIN)
-if humidity is not None and temperature is not None:
-    print(temperature + '|' + humidity)
-else:
-    print("Error|Error")
+dhtDevice = adafruit_dht.DHT22(board.D18)
+
+temperature_c = dhtDevice.temperature
+temperature_f = temperature_c * (9 / 5) + 32
+humidity = dhtDevice.humidity
+
+print(temperature_c + '|' + humidity)
