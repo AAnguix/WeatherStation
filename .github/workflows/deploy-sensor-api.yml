@@ -22,6 +22,7 @@ jobs:
         port: ${{ secrets.PORT }}
         script: |
           git clone git@github.com:AAnguix/WeatherStation.git && cd sensor
+          chmod 777 sensor-setup.sh
           ./sensor-setup.sh
           npm install — production
           node app.js
