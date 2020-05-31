@@ -8,6 +8,4 @@ yes | pip3 install adafruit-blinka
 yes | pip3 install adafruit-circuitpython-dht
 yes | sudo apt-get install libgpiod2
 
-curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
-sudo apt-get install -y nodejs
 apt-get autoremove
