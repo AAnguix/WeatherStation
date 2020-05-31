@@ -1,4 +1,4 @@
-wget https://nodejs.org/dist/v11.15.0/node-v11.15.0-linux-armv6l.tar.gz
-tar -xzf node-v11.15.0-linux-armv6l.tar.gz
-sudo cp -R node-v11.15.0-linux-armv6l/* /usr/local/
-node -v
+wget https://nodejs.org/dist/latest-v12.x/node-v12.17.0-linux-armv7l.tar.gz
+	tar -xzf node-v12.17.0-linux-armv7l.tar.gz
+	sudo cp -R node-v12.17.0-linux-armv7l/* /usr/local/
+	node -v
