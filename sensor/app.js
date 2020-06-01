@@ -1,34 +1,9 @@
 const express = require('express')
-const app = express()
-const { port, sensorId } = require('./config');
-const { readSensor } = require('./sensor');
-const moment = require('moment')
+const { port } = require('./config');
 
-app.get('/api/sensor', (req, res) => {
-        const localTime = moment().format()
-  
-        readSensor().then(function(data) {
-            const sensorData = data.toString()
-            const values = sensorData.split("|")
-            const result = {
-                "sensorId": sensorId,
-                "temperature": values[0].replace("\r","").replace("\n", ""),
-                "humidity": values[1].replace("\r","").replace("\n", ""),
-                "error": false,
-                "time": localTime,
-            }
-            res.send(result)
-        }).catch(function(error) {
-            const result = {
-                "sensorId": sensorId,
-                "temperature": 0,
-                "humidity": 0,
-                "error": true,
-                "time": localTime,
-            }
-            res.send(result)
-        });
-    }
-)
+const app = express()
+app.use('/api/sensor', require('./routes/sensor'));
+app.use('/api/health', require('./routes/healthcheck'));
+app.use('/api/ping', require('./routes/ping'));
 
 app.listen(port, () => console.log(`App listening at http://localhost:${port}`))

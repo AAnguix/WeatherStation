@@ -1,9 +1,9 @@
 const { spawn } = require('child_process');
 
-function readSensor() {
+function pythonScript(script) {
     return new Promise(function(success, nosuccess) {
 
-        const python = spawn('python', ['./read-sensor.py']);
+        const python = spawn('python', [script]);
     
         python.stdout.on('data', function(data) {
     
@@ -17,4 +17,4 @@ function readSensor() {
     });
 }
 
-exports.readSensor = readSensor 
+exports.pythonScript = pythonScript 
