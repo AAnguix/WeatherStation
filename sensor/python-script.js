@@ -1,20 +1,25 @@
-const { spawn } = require('child_process');
+let { PythonShell } = require('python-shell');
 
-function pythonScript(script) {
-    return new Promise(function(success, nosuccess) {
+async function pythonScript(script){
+    let options = {
+    mode: 'text',
+    pythonOptions: ['-u'],
+    scriptPath: "./",
+    };
 
-        const python = spawn('python', [script]);
-    
-        python.stdout.on('data', function(data) {
-    
-            success(data);
-        });
-    
-        python.stderr.on('data', (data) => {
-    
-            nosuccess(data);
-        });
-    });
+    let data = null
+    let errorMessage = null
+    await PythonShell.run(script, options, function (error, pythonResult) {
+        data = pythonResult
+        if (error) {
+            errorMessage = error.message
+        }
+    })
+
+    return {
+        data: data,
+        error: errorMessage
+    }
 }
 
 exports.pythonScript = pythonScript 
