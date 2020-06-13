@@ -1,5 +1,6 @@
 const express = require('express')
 const app = express()
+const { influx } = require('./influx-client')
 const fs = require('fs')
 const { today } = require('./dateUtils')
 const { port } = require('./config');
@@ -7,6 +8,20 @@ const { port } = require('./config');
 app.get('/api/metrics', (req, res) => {
     getSensorMeasurements(getTodayFiles())
     res.send(results)
+})
+
+influx.getDatabaseNames()
+.then(names => {
+  if (!names.includes(database)) {
+    console.error(database + `database doesn't exists. Creating it`);
+    return influx.createDatabase(database);
+  }
+})
+.then(() => {
+    app.listen(port, () => console.log(`App listening at http://localhost:${port}`))
+})
+.catch(err => {
+    console.error(`Error creating Influx database`);
 })
 
 function getSensorMeasurements(fileNames) {
@@ -32,14 +47,12 @@ function getSensorMeasurements(fileNames) {
     return results
 }
 
-function getSensorFiles(dataFolder) {
-    return fs.readdirSync(dataFolder);
-}
-
 function getTodayFiles() {
     const fileNames = getSensorFiles("./")
     const date = today()
     return fileNames.filter(fn => fn.startsWith(date))
 }
 
-app.listen(port, () => console.log(`App listening at http://localhost:${port}`))
+function getSensorFiles(dataFolder) {
+    return fs.readdirSync(dataFolder);
+}
