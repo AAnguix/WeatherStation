@@ -17,10 +17,8 @@ function collectSensorMeasurement(sensorIP, sensorApiPort, sensorApiUrl) {
 
   axios.get(url)
     .then(response => {
-      const sensorId = response.data.sensorId
-      const fileName = getFileName(sensorId)
-      const content = createContent(response)
-      createFileOrAppend(fileName, content)
+      const host = response.data.sensorId
+      writeToInfluxDb(host, response.data.temperature, response.data.humidity, response.data.time)
     })
     .catch(error => {
       console.log(error);
@@ -45,6 +43,27 @@ function createFileOrAppend(fileName, content) {
       console.log("Cannot write file ", e);
   }
 }
+
+function writeToInfluxDb(host, temperature, humidity, time) {
+  const temperaturePoint = {
+    measurement: 'temperature',
+    tags: { host: host },
+    fields: { value: temperature, time: time },
+  }
+  const humidityPoint = {
+    measurement: 'humidity',
+    tags: { host: host },
+    fields: { value: humidity, time: time },
+  }
+
+  influx.writePoints([
+    temperaturePoint,
+    humidityPoint
+  ]).catch(err => {
+    console.error(`Error saving data to InfluxDB! ${err.stack}`)
+  })
+}
+
 
 function getFileName(sensorId) {
   return today() + "_" + sensorId
