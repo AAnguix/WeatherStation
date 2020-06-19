@@ -4,22 +4,22 @@ const router = express.Router({});
 const { pythonScript } = require('./../python-script');
 
 function i2c() {
-    result = pythonScript('i2c.py')
+    result = pythonScript('health/i2c.py')
     return isHealthy(result.error)
 }
 
 function pin() {
-    result = pythonScript('pin.py')
+    result = pythonScript('health/pin.py')
     return isHealthy(result.error)
 }
 
 function spi() {
-    result = pythonScript('spi.py')
-    return isHealthy(result.error)
+    result = pythonScript('health/spi.py')
+    return isHealthy(result)
 }
 
-function isHealthy(error) {
-    return (error === null) ? "healthy" : "unhealthy"
+function isHealthy(result) {
+    return (result.error === null && result.data === "healthy") ? "healthy" : "unhealthy"
 }
 
 router.get('/', async (_req, res, _next) => {
