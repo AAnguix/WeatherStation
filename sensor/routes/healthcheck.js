@@ -3,21 +3,21 @@ const moment = require('moment')
 const router = express.Router({});
 const { pythonScript } = require('./../python-script');
 
-function i2c() {
+async function i2c() {
     result = await pythonScript('health/i2c.py')
     console.log("i2c")
     console.log(result)
     return isHealthy(result)
 }
 
-function pin() {
+async function pin() {
     result = await pythonScript('health/pin.py')
     console.log("pin")
     console.log(result)
     return isHealthy(result)
 }
 
-function spi() {
+async function spi() {
     result = await pythonScript('health/spi.py')
     console.log("spi")
     console.log(result)
