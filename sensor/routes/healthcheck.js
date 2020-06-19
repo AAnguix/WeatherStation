@@ -4,21 +4,21 @@ const router = express.Router({});
 const { pythonScript } = require('./../python-script');
 
 function i2c() {
-    result = pythonScript('health/i2c.py')
+    result = await pythonScript('health/i2c.py')
     console.log("i2c")
     console.log(result)
     return isHealthy(result)
 }
 
 function pin() {
-    result = pythonScript('health/pin.py')
+    result = await pythonScript('health/pin.py')
     console.log("pin")
     console.log(result)
     return isHealthy(result)
 }
 
 function spi() {
-    result = pythonScript('health/spi.py')
+    result = await pythonScript('health/spi.py')
     console.log("spi")
     console.log(result)
     return isHealthy(result)
