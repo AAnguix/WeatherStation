@@ -2,7 +2,7 @@ const axios = require('axios');
 const { sensor_ips, sensor_api_url, sensor_api_port } = require('./config');
 const fs = require('fs')
 const os = require("os");
-const { today } = require("./dateUtils");
+
 
 collectSensorsMeasurements()
 
@@ -17,31 +17,13 @@ function collectSensorMeasurement(sensorIP, sensorApiPort, sensorApiUrl) {
 
   axios.get(url)
     .then(response => {
-      const host = response.data.sensorId
-      writeToInfluxDb(host, response.data.temperature, response.data.humidity, response.data.time)
+      const data = response.data
+      const host = data.sensorId
+      writeToInfluxDb(host, data.temperature, data.humidity, data.time)
     })
     .catch(error => {
       console.log(error);
     });
-}
-
-function createContent(response) {
-  return response.data.time + "|" + response.data.temperature + "|" + response.data.humidity + os.EOL
-}
-
-function createFileOrAppend(fileName, content) {
-  try{
-    if (fs.existsSync(fileName)) {
-      fs.appendFile(fileName, content, function (err) {
-        if (err) throw err;
-      })
-    } 
-    else {
-      fs.writeFileSync(fileName, content);
-    }
-  }catch (e){
-      console.log("Cannot write file ", e);
-  }
 }
 
 function writeToInfluxDb(host, temperature, humidity, time) {
@@ -62,9 +44,4 @@ function writeToInfluxDb(host, temperature, humidity, time) {
   ]).catch(err => {
     console.error(`Error saving data to InfluxDB! ${err.stack}`)
   })
-}
-
-
-function getFileName(sensorId) {
-  return today() + "_" + sensorId
 }
