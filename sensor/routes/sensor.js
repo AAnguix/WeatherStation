@@ -8,6 +8,7 @@ router.get('/', async (req, res, _next) => {
 	const localTime = moment().format()
   
     const sensor = readSensor()
+    console.log(sensor)
     const data = sensor.data
     const values = data.split("|")
     const result = {
@@ -20,8 +21,8 @@ router.get('/', async (req, res, _next) => {
     res.send(result)
 })
 
-function readSensor() {
-    return pythonScript('./read-sensor.py')
+async function readSensor() {
+    return await pythonScript('./read-sensor.py')
 }
 
 module.exports = router;
