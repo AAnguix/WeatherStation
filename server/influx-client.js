@@ -1,6 +1,6 @@
 const { database, database_host } = require('./config');
 
-const Influx = require('../../')
+const Influx = require('influx');
 const express = require('express')
 const http = require('http')
 const os = require('os')
