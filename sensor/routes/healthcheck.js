@@ -29,7 +29,7 @@ async function spi() {
 
 function isHealthy(result) {
     console.log(result)
-    return (result.success  && result.data === "healthy") ? "healthy" : "unhealthy"
+    return (result.success  && result.data[0] === "healthy") ? "healthy" : "unhealthy"
 }
 
 router.get('/', async (_req, res, _next) => {
