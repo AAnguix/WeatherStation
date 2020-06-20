@@ -13,7 +13,6 @@ async function pythonScript(script) {
         scriptResult
       ) {
         if (err) {
-          console.log(err)
           reject({ success: false, data: null, error: err });
         }
         resolve({ success: true, data: scriptResult, error: null });

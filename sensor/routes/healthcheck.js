@@ -28,7 +28,6 @@ async function spi() {
 }
 
 function isHealthy(result) {
-    console.log(result)
     return (result.success  && result.data[0] === "healthy") ? "healthy" : "unhealthy"
 }
 
