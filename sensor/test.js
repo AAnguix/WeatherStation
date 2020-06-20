@@ -3,14 +3,12 @@ const { pythonScript } = require('./python-script');
 const start = async function(a, b) {
 
     try {
-        result = await pythonScript('health/test.py')
+        sensor = await pythonScript('read-sensor.py')
     } catch (e) {
         console.error(e);
     }
 
-    console.log("start")
-    console.log(result)
-    console.log("finish")
+    console.log(sensor)
   }
   
   // Call start
