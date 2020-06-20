@@ -37,15 +37,15 @@ router.get('/', async (_req, res, _next) => {
 		uptime: process.uptime(),
 		components: [{
             "name": "pin",
-            "status": pin()
+            "status": await pin()
         },
         {
             "name": "i2c",
-            "status": i2c()
+            "status": await i2c()
         },
         {
             "name": "spi",
-            "status": spi()
+            "status": await spi()
         }],
 		time: moment().format()
 	};
