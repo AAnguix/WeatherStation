@@ -1,9 +1,9 @@
-const { pythonScript2 } = require('./python-script');
+const { pythonScript } = require('./python-script');
 
 const start = async function(a, b) {
 
     try {
-        result = await pythonScript2('health/test.py')
+        result = await pythonScript('health/test.py')
     } catch (e) {
         console.error(e);
     }
