@@ -8,13 +8,10 @@ router.get('/', async (req, res, _next) => {
 	const localTime = moment().format()
   
     const sensor = await readSensor()
-    console.log(sensor)
-    const data = sensor.data[0]
-    const values = data.split("|")
     const result = {
         "sensorId": sensorId,
-        "temperature": values[0].replace("\r","").replace("\n", ""),
-        "humidity": values[1].replace("\r","").replace("\n", ""),
+        "temperature": sensor.data[0],
+        "humidity": sensor.data[1],
         "error": sensor.error,
         "time": localTime,
     }
