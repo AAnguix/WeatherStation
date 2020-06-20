@@ -7,9 +7,9 @@ const { pythonScript } = require('./../python-script');
 router.get('/', async (req, res, _next) => {
 	const localTime = moment().format()
   
-    const sensor = readSensor()
+    const sensor = await readSensor()
     console.log(sensor)
-    const data = sensor.data
+    const data = sensor.data[0]
     const values = data.split("|")
     const result = {
         "sensorId": sensorId,
