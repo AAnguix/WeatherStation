@@ -7,6 +7,16 @@
         {
             "type": "node",
             "request": "launch",
+            "name": "TEST",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "cwd": "${workspaceFolder}\\sensor",
+            "program": "${workspaceFolder}\\sensor\\test.js"
+        },
+        {
+            "type": "node",
+            "request": "launch",
             "name": "Sensor API",
             "skipFiles": [
                 "<node_internals>/**"

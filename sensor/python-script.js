@@ -1,25 +1,26 @@
 let { PythonShell } = require('python-shell');
 
-function pythonScript(script){
+async function pythonScript(script) {
     let options = {
-    mode: 'text',
-    pythonOptions: ['-u'],
-    scriptPath: "./",
-    };
+        mode: 'text',
+        pythonOptions: ['-u'],
+        scriptPath: "./",
+        };
 
-    let data = null
-    let errorMessage = null
-    PythonShell.run(script, options, function (error, pythonResult) {
-        data = pythonResult
-        if (error) {
-            errorMessage = error.message
+    const result = await new Promise((resolve, reject) => {
+      PythonShell.run(script, options, function(
+        err,
+        scriptResult
+      ) {
+        if (err) {
+          console.log(err)
+          reject({ success: false, data: null, error: err });
         }
-    })
+        resolve({ success: true, data: scriptResult, error: null });
+      });
+    });
 
-    return {
-        data: data,
-        error: errorMessage
-    }
-}
+    return result
+  }
 
-exports.pythonScript = pythonScript 
+exports.pythonScript = pythonScript
