@@ -32,8 +32,8 @@ function databaseNames() {
   return influx.getDatabaseNames()
 }
 
-function metrics(){
-  return influx.query(`select * from temperature`)
+function temperatures(host){
+  return influx.query(`select * from temperature where host = ${host}`)
 }
 
 function write(host, temperature, humidity, time) {
@@ -58,4 +58,4 @@ function write(host, temperature, humidity, time) {
 
   exports.write = write
   exports.databaseNames = databaseNames
-  exports.metrics = metrics
+  exports.temperatures = temperatures
