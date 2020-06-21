@@ -1,7 +1,7 @@
 const { database, database_host } = require('./config');
 const Influx = require('influx');
 
-export const influx = new Influx.InfluxDB({
+const influx = new Influx.InfluxDB({
     host: database_host,
     database: database,
     schema: [
