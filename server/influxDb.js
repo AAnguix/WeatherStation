@@ -58,3 +58,4 @@ function write(host, temperature, humidity, time) {
 
   exports.write = write
   exports.databaseNames = databaseNames
+  exports.metrics = metrics
