@@ -1,4 +1,32 @@
-const { influx } = require('./influxClient');
+const { database, database_host } = require('./config');
+const Influx = require('influx');
+
+const influx = new Influx.InfluxDB({
+    host: database_host,
+    database: database,
+    schema: [
+      {
+        measurement: 'temperature',
+        fields: {
+          value: Influx.FieldType.FLOAT,
+          time: Influx.FieldType.STRING
+        },
+        tags: [
+          'host'
+        ]
+      },
+      {
+        measurement: 'humidity',
+        fields: {
+          value: Influx.FieldType.FLOAT,
+          time: Influx.FieldType.STRING
+        },
+        tags: [
+          'host'
+        ]
+      }
+    ]
+  })
 
 function write(host, temperature, humidity, time) {
     const temperaturePoint = {
