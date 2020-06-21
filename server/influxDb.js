@@ -28,6 +28,10 @@ const influx = new Influx.InfluxDB({
     ]
   })
 
+async function databaseNames() {
+  return await influx.getDatabaseNames()
+}
+
 function write(host, temperature, humidity, time) {
     const temperaturePoint = {
       measurement: 'temperature',
@@ -49,3 +53,4 @@ function write(host, temperature, humidity, time) {
   }
 
   exports.write = write
+  exports.databaseNames = databaseNames
