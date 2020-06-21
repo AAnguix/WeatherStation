@@ -2,7 +2,7 @@ const axios = require('axios');
 const { sensor_ips, sensor_api_url, sensor_api_port } = require('./config');
 const fs = require('fs')
 const os = require("os");
-
+const { write } = require('./influxDb');
 
 collectSensorsMeasurements()
 
@@ -19,29 +19,9 @@ function collectSensorMeasurement(sensorIP, sensorApiPort, sensorApiUrl) {
     .then(response => {
       const data = response.data
       const host = data.sensorId
-      writeToInfluxDb(host, data.temperature, data.humidity, data.time)
+      write(host, data.temperature, data.humidity, data.time)
     })
     .catch(error => {
       console.log(error);
     });
-}
-
-function writeToInfluxDb(host, temperature, humidity, time) {
-  const temperaturePoint = {
-    measurement: 'temperature',
-    tags: { host: host },
-    fields: { value: temperature, time: time },
-  }
-  const humidityPoint = {
-    measurement: 'humidity',
-    tags: { host: host },
-    fields: { value: humidity, time: time },
-  }
-
-  influx.writePoints([
-    temperaturePoint,
-    humidityPoint
-  ]).catch(err => {
-    console.error(`Error saving data to InfluxDB! ${err.stack}`)
-  })
 }
