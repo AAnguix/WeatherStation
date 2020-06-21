@@ -32,6 +32,10 @@ function databaseNames() {
   return influx.getDatabaseNames()
 }
 
+function metrics(){
+  return influx.query(`select * from ${database}`)
+}
+
 function write(host, temperature, humidity, time) {
     const temperaturePoint = {
       measurement: 'temperature',
