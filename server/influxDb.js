@@ -33,7 +33,7 @@ function databaseNames() {
 }
 
 function metrics(){
-  return influx.query(`select * from ${database}`)
+  return influx.query(`select * from temperature`)
 }
 
 function write(host, temperature, humidity, time) {
