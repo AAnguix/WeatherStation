@@ -42,7 +42,7 @@
                 "<node_internals>/**"
             ],
             "cwd": "${workspaceFolder}\\server",
-            "program": "${workspaceFolder}\\server\\sensor-collector.js"
+            "program": "${workspaceFolder}\\server\\sensorCollector.js"
         }
     ]
 }
