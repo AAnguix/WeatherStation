@@ -1,8 +1,11 @@
 const axios = require('axios');
+const axiosRetry = require('axios-retry');
 const { sensor_ips, sensor_api_url, sensor_api_port } = require('./config');
 const fs = require('fs')
 const os = require("os");
 const { write } = require('./influxDb');
+
+axiosRetry(axios, { retries: 3 });
 
 collectSensorsMeasurements()
 

@@ -5,6 +5,7 @@
   "main": "app.js",
   "dependencies": {
     "axios": "^0.19.2",
+    "axios-retry": "^3.1.8",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "influx": "^5.5.2",
