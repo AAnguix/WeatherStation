@@ -15,7 +15,7 @@ function collectSensorsMeasurements() {
 function collectSensorMeasurement(sensorIP, sensorApiPort, sensorApiUrl) {
   url = "http://" + sensorIP + ":" + sensorApiPort + sensorApiUrl
 
-  axios.get(url)
+  axios.get(url, { timeout: 5000 })
     .then(response => {
       const data = response.data
       const host = data.sensorId

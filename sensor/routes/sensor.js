@@ -5,17 +5,22 @@ const { sensorId } = require('./../config');
 const { pythonScript } = require('./../python-script');
 
 router.get('/', async (req, res, _next) => {
-	const localTime = moment().format()
-  
-    const sensor = await readSensor()
-    const result = {
-        "sensorId": sensorId,
-        "temperature": sensor.data[0],
-        "humidity": sensor.data[1],
-        "error": sensor.error,
-        "time": localTime,
+    const localTime = moment().format()
+    
+    try {
+        const sensor = await readSensor()
+        const result = {
+            "sensorId": sensorId,
+            "temperature": sensor.data[0],
+            "humidity": sensor.data[1],
+            "error": sensor.error,
+            "time": localTime,
+        }
+        res.send(result)
+
+    }catch(error) {
+        console.log(error)
     }
-    res.send(result)
 })
 
 async function readSensor() {
